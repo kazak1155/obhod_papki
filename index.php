@@ -7,7 +7,7 @@ function listing($dir, $space) //функция для вывода структ
     $dirCanonical = realpath($dir); // Возвращает канонизированный абсолютный путь к файлу
     if ($fileOrDir = opendir($dirCanonical)) { // Возвращает канонизированный абсолютный путь к файлу
         while ($fileName = readdir($fileOrDir)) { // Получает элемент каталога по его дескриптору, перебирает все элемен ы в папке
-            if ($fileName == "." || $fileName == "..") //убтрает элементы с наваниями "." и ".." это сслыки на папку
+            if ($fileName == "." || $fileName == "..") //убирает элементы с названиями "." и ".." это сслыки на папку
                 continue;
             $pathToFile = $dirCanonical . DIRECTORY_SEPARATOR . $fileName; //формируется путь файла
             echo $space . $pathToFile . '<br>'; // выводится путь файла
