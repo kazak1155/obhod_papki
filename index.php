@@ -1,4 +1,9 @@
 <?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 $dir = 'dir1';  //путь к папке, в которой надо
 $space = ''; //что подставить перед выводом пути папки
 
@@ -20,4 +25,23 @@ function listing($dir, $space) //функция для вывода структ
 }
 
 // Вывести список файлов и каталогов
-listing($dir, $space);
+//listing($dir, $space); // вызов функциии обхода папки
+
+
+
+/*
+--------------------------------------------------------------------------------------------------
+обход папки(получения дерева) с использование итератора RecursiveIteratorIterator и вложенного в него RecursiveDirectoryIterator
+*/
+
+
+$rdir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir), TRUE);  // создаем экземляр класса  RecursiveIteratorIterator
+// и в него вкладывает экземляр класса RecursiveDirectoryIterator в качестве аргумента, а ему уже исслудуемую папку
+
+foreach ($rdir as $file) // проходим по полученной коллеции объектов
+{
+    if ($file->getFilename() != "." || $file->getFilename() != "..") { // выводим все названия кроме "." и ".." то
+        echo '<pre>' . str_repeat('-- ', $rdir->getDepth()) . $file . '</pre>'; // str_repeat добавляет '-- ' столько раз,
+        // сколько выдает getDepth()(глубина вложенности) перед именем файла
+    }
+}
