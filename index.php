@@ -1,19 +1,19 @@
 <?php
-$dir = 'C:/myProject/test/dir1/';  //путь к папке, в которой надо
-$space = '';
+$dir = 'dir1';  //путь к папке, в которой надо
+$space = ''; //что подставить перед выводом пути папки
 
-function listing($dir, $space)
+function listing($dir, $space) //функция для вывода структуры папки listing на вход она принимает имя папки и что поставить перед путем файла или папки
 {
-    $dirCanonical = realpath($dir);
-    if ($fileOrDir = opendir($dirCanonical)) {
-        while ($fileName = readdir($fileOrDir)) {
-            if ($fileName == "." || $fileName == "..")
+    $dirCanonical = realpath($dir); // Возвращает канонизированный абсолютный путь к файлу
+    if ($fileOrDir = opendir($dirCanonical)) { // Возвращает канонизированный абсолютный путь к файлу
+        while ($fileName = readdir($fileOrDir)) { // Получает элемент каталога по его дескриптору, перебирает все элемен ы в папке
+            if ($fileName == "." || $fileName == "..") //убтрает элементы с наваниями "." и ".." это сслыки на папку
                 continue;
-            $pathToFile = $dirCanonical . DIRECTORY_SEPARATOR . $fileName;
-            echo $space . $pathToFile . "<br>";;
-            if (is_dir($pathToFile)) {
-                echo $space . $pathToFile."<br>";
-                listing($pathToFile,$space . '-' . '&nbsp;');
+            $pathToFile = $dirCanonical . DIRECTORY_SEPARATOR . $fileName; //формируется путь файла
+            echo $space . $pathToFile . '<br>'; // выводится путь файла
+            if (is_dir($pathToFile)) { //проверяется, если файл это папка то рекурсивно запускается функция обхода папки
+                echo $space . $pathToFile . '<br>'; // выводится путь папки
+                listing($pathToFile,$space . '-' . '&nbsp;'); // вызывается функция обхода папки и делается отсутп, чтобы показать структуру папки
             }
         }
     }
